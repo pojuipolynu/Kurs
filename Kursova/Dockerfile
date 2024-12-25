@@ -8,6 +8,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install alembic
 
 COPY Kursova/app /app
+COPY Kursova/.env /app/.env
 
 EXPOSE 8000
 
