@@ -1,13 +1,13 @@
 FROM python:3.11-alpine
 
-WORKDIR Kursova/app
+WORKDIR /app
 
 COPY Kursova/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 RUN pip install alembic
 
-COPY . .
+COPY Kursova/app /app
 
 EXPOSE 8000
 
