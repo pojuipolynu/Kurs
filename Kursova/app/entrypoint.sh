@@ -13,3 +13,5 @@ else
     echo "Main application file not found at /app/main.py"
     exit 2
 fi
+echo "Loaded environment variables:"
+env
