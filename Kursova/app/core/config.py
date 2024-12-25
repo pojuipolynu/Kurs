@@ -16,6 +16,6 @@ class AppConfig(BaseSettings):
 
     @property
     def POSTGRES_URL(self):
-        return f"postgresql+asyncpg://{self.DB_USER}:{self.DB_PASSWORD}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
+        return f"postgresql+asyncpg://app_db_a0ue_user:FBxcnzlDIo7T8xtFLG1dMeBkJgIsjfqq@dpg-ctm8k6lds78s73caj700-a.oregon-postgres.render.com/app_db_a0ue"
 
 settings = AppConfig()
