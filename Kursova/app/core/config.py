@@ -8,7 +8,7 @@ class AppConfig(BaseSettings):
     ORIGINS: List[str] = ["http://localhost", "http://127.0.0.1:8000", "http://localhost:3000"]
     DB_USER: str = 'postgres'  
     DB_PASSWORD: str = 'password' 
-    DB_HOST: str = 'localhost'
+    DB_HOST: str = 'postgres'
     DB_PORT: int = 5432
     DB_NAME: str = 'app_db'  
     
