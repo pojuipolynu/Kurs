@@ -7,11 +7,11 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_USER=${APP_DB_USER}
-      - POSTGRES_PASSWORD=${APP_DB_PASSWORD}
-      - POSTGRES_DB=${APP_DB_NAME}
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=app_db
     ports:
-      - '${APP_DB_PORT}:${APP_DB_PORT}'
+      - '5432:5432'
 
   web:
     build:
