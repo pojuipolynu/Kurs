@@ -12,6 +12,6 @@ COPY . .
 EXPOSE 8000
 
 COPY Kursova/app/entrypoint.sh Kursova/app/entrypoint.sh
-RUN chmod +x /app/entrypoint.sh
+RUN chmod +x Kursova/app/entrypoint.sh
 
 ENTRYPOINT ["Kursova/app/entrypoint.sh"]
