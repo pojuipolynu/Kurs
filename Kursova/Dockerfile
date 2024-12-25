@@ -1,6 +1,6 @@
 FROM python:3.11-alpine
 
-WORKDIR /app
+WORKDIR Kursova/app
 
 COPY Kursova/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
@@ -11,7 +11,7 @@ COPY . .
 
 EXPOSE 8000
 
-COPY Kursova/app/entrypoint.sh Kursova/app/entrypoint.sh
-RUN chmod +x Kursova/app/entrypoint.sh
+COPY Kursova/app/entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
 
-ENTRYPOINT ["Kursova/app/entrypoint.sh"]
+ENTRYPOINT ["/app/entrypoint.sh"]
