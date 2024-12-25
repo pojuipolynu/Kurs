@@ -11,7 +11,7 @@ COPY . .
 
 EXPOSE 8000
 
-COPY app/entrypoint.sh /app/entrypoint.sh
+COPY Kursova/app/entrypoint.sh /app/entrypoint.sh
 RUN chmod +x /app/entrypoint.sh
 
 ENTRYPOINT ["/app/entrypoint.sh"]
