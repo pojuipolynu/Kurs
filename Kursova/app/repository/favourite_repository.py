@@ -8,7 +8,7 @@ class FavouriteRepository(BaseRepository):
     def __init__(self, db: AsyncSession):
         super().__init__(db=db, model=Favourite)
 
-    async def get_user_favourites(self, user_id: int):
+    async def get_user_favourites(self, user_id: str):
         query = (
             select(Song)
             .join(Favourite, Song.id == Favourite.song_id)
@@ -18,7 +18,7 @@ class FavouriteRepository(BaseRepository):
         result = songs.scalars().all()
         return result
     
-    async def get_favourite(self, user_id: int, song_id:int):
+    async def get_favourite(self, user_id: str, song_id:int):
         song = await self.db.execute(select(self.model).filter(self.model.user_id == user_id, self.model.song_id == song_id))
         variable = song.scalars().first()
         if variable is None:

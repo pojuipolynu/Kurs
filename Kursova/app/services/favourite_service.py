@@ -7,7 +7,7 @@ class FavouriteService:
     def __init__(self, favourite_repository: FavouriteRepository):
         self.favourite_repository = favourite_repository
 
-    async def get_favourites(self, user_id: int):
+    async def get_favourites(self, user_id: str):
         favourites = await self.favourite_repository.get_user_favourites(user_id)
         return list(favourites)
 
@@ -18,8 +18,8 @@ class FavouriteService:
         added_favourite = await self.favourite_repository.create(db_favourite)
         return added_favourite
 
-    async def remove_favourites(self, favourite_id: int, user_id: int):
-        favourite = await self.favourite_repository.get_favourite(favourite_id, user_id)
+    async def remove_favourites(self, favourite_id: int, user_id: str):
+        favourite = await self.favourite_repository.get_favourite(user_id, favourite_id)
         if favourite is None:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Song not found")
         await self.favourite_repository.delete(favourite)

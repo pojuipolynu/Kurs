@@ -28,7 +28,7 @@ class Song(BaseId):
 class Favourite(BaseId):
     __tablename__ = "favourites"
     song_id = mapped_column(Integer, ForeignKey("songs.id"), nullable=False)
-    user_id = mapped_column(Integer, nullable=False) 
+    user_id = mapped_column(String, nullable=False) 
 
     song = relationship("Song", back_populates="favourites")
 
@@ -36,7 +36,7 @@ class Favourite(BaseId):
 class Playlist(BaseId):
     __tablename__ = "playlists"
     title = mapped_column(String, nullable=False)
-    user_id = mapped_column(Integer, nullable=False) 
+    user_id = mapped_column(String, nullable=False) 
 
 
 class List(BaseId):
