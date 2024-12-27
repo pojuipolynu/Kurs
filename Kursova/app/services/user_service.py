@@ -3,6 +3,8 @@ from schemas.user_schema import StatusUpdate, PlaylistCreate
 from repository.status_repository import StatusRepository
 from repository.playlist_repository import PlaylistRepository
 from fastapi import HTTPException, status
+from pydantic import parse_obj_as
+
 
 class StatusService:
     def __init__(self, status_repository: StatusRepository):
@@ -38,7 +40,7 @@ class PlaylistService:
 
     async def get_playlists(self, user_id: str):
         playlists = await self.playlist_repository.get_user_playlists(user_id)
-        return list(playlists)
+        return parse_obj_as(List[Playlist], playlists)
     
     async def get_one_playlist(self, playlist_id:int):
         playlist = await self.playlist_repository.get_one(playlist_id)

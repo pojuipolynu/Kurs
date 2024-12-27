@@ -30,7 +30,7 @@ async def create_playlist(user_id: str, playlist_create: PlaylistCreate, playlis
     return await playlist_service.create_playlist(user_id, playlist_create)
 
 @router.get("/playlists/{user_id}", response_model=PlaylistList, status_code=status.HTTP_200_OK)
-async def get_playlists(user_id: str,  playlist_service: PlaylistService = Depends(get_playlist_service)):
+async def get_playlists(user_id: str, playlist_service: PlaylistService = Depends(get_playlist_service)):
     playlists = await playlist_service.get_playlists(user_id)
     return PlaylistList(playlists=playlists)
 
