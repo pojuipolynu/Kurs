@@ -23,7 +23,7 @@ class Song(BaseId):
     imageUrl = mapped_column(String, nullable=False)
 
     favourites = relationship("Favourite", back_populates="song")
-
+    lists = relationship("List", back_populates="song")
 
 class Favourite(BaseId):
     __tablename__ = "favourites"
@@ -38,6 +38,8 @@ class Playlist(BaseId):
     title = mapped_column(String, nullable=False)
     user_id = mapped_column(String, nullable=False) 
 
+    lists = relationship("List", back_populates="playlist")
+
 
 class List(BaseId):
     __tablename__ = "lists"
@@ -46,3 +48,8 @@ class List(BaseId):
 
     playlist = relationship("Playlist")
     song = relationship("Song")
+
+class Status(BaseId):
+    __tablename__ = "statuses"
+    user_id = mapped_column(String, nullable=False) 
+    status = mapped_column(String, nullable=False) 

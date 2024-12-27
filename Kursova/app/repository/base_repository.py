@@ -28,4 +28,9 @@ class BaseRepository:
         await self.db.delete(variable)
         await self.db.commit()
 
+    async def update(self, variable, updated_variable):
+        for field, value in updated_variable.model_dump(exclude_unset=True).items():
+            setattr(variable, field, value)
+        await self.db.commit()
+        await self.db.refresh(variable)
             
