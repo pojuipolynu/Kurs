@@ -12,6 +12,10 @@ class PlaylistCreate(BaseModel):
 
 class Playlist(PlaylistCreate):
     user_id: str
+    id: int
+    class Config:
+        orm_mode = True
+        from_attributes = True
 
 class PlaylistList(BaseModel):
     playlists: List[Playlist]
