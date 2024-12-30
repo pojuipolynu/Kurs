@@ -33,7 +33,7 @@ async def get_album_by_id(album_id: int, album_service: AlbumService = Depends(g
     album = await album_service.get_album_by_id(album_id)
     return album
 
-@router.get("/albums/search/{title}", response_model=AlbumList, status_code=status.HTTP_200_OK)
+@router.get("/albums/search_name/{title}", response_model=AlbumList, status_code=status.HTTP_200_OK)
 async def get_albums_by_name(title:str, album_service: AlbumService = Depends(get_album_service)):
     albums = await album_service.get_albums_by_name(title)
     return AlbumList(albums=albums)
@@ -69,7 +69,7 @@ async def get_artist_by_id(artist_id: int, artist_service: ArtistService = Depen
     artist = await artist_service.get_artist_by_id(artist_id)
     return artist
 
-@router.get("/artists/search/{name}", response_model=ArtistList, status_code=status.HTTP_200_OK)
+@router.get("/artists/search_name/{name}", response_model=ArtistList, status_code=status.HTTP_200_OK)
 async def get_artists_by_name(name:str, artist_service: ArtistService = Depends(get_artist_service)):
     artists = await artist_service.get_artists_by_name(name)
     return ArtistList(artists=artists)
