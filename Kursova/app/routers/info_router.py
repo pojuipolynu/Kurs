@@ -69,7 +69,7 @@ async def get_artist_by_id(artist_id: int, artist_service: ArtistService = Depen
     artist = await artist_service.get_artist_by_id(artist_id)
     return artist
 
-@router.get("/artists/search/{title}", response_model=ArtistList, status_code=status.HTTP_200_OK)
+@router.get("/artists/search/{name}", response_model=ArtistList, status_code=status.HTTP_200_OK)
 async def get_artists_by_name(name:str, artist_service: ArtistService = Depends(get_artist_service)):
     artists = await artist_service.get_artists_by_name(name)
     return ArtistList(artists=artists)
