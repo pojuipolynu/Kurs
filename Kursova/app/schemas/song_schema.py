@@ -3,10 +3,11 @@ from typing import List
 
 class SongBase(BaseModel):
     title: str
-    artist: str
+    artist_id: int
     fileUrl: str
     imageUrl: str
     duration: str
+    album_id: int
 
 class Song(SongBase):
     id: int

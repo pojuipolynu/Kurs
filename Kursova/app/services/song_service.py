@@ -26,7 +26,7 @@ class SongService:
     async def create_song(self, song_create: SongBase):
         if song_create is None:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Data wasn`t given")
-        db_song = Song(title=song_create.title, artist=song_create.artist, fileUrl=song_create.fileUrl, imageUrl=song_create.imageUrl, duration=song_create.duration)
+        db_song = Song(title=song_create.title, fileUrl=song_create.fileUrl, imageUrl=song_create.imageUrl, duration=song_create.duration, artist_id=song_create.artist_id, album_id=song_create.album_id)
         created_song = await self.song_repository.create(db_song)
         return created_song
 
