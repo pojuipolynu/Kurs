@@ -20,8 +20,8 @@ class AlbumRepository(BaseRepository):
                 self.song.album_id,
                 Album.title.label("album"),
                 Artist.name.label("artist"))
-            .join(Album, self.model.album_id == Album.id)
-            .join(Artist, self.model.artist_id == Artist.id).filter(self.song.album_id == album_id)
+            .join(Album, self.song.album_id == Album.id)
+            .join(Artist, self.song.artist_id == Artist.id).filter(self.song.album_id == album_id)
         )
         songs = result.mappings().all()  
 
@@ -63,8 +63,8 @@ class ArtistRepository(BaseRepository):
                 self.song.album_id,
                 Album.title.label("album"),
                 Artist.name.label("artist"))
-            .join(Album, self.model.album_id == Album.id)
-            .join(Artist, self.model.artist_id == Artist.id)
+            .join(Album, self.song.album_id == Album.id)
+            .join(Artist, self.song.artist_id == Artist.id)
             .filter(self.song.artist_id == artist_id)
         )
         songs = result.mappings().all()  
