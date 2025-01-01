@@ -12,7 +12,7 @@ router = APIRouter(prefix="/songs")
 @router.get("/", status_code=status.HTTP_200_OK)
 async def get_songs(song_service: SongService = Depends(get_song_service)):
     songs = await song_service.get_songs()
-    return SongsList(songs=songs)
+    return songs
 
 @router.get("/{song_id}", status_code=status.HTTP_200_OK)
 async def get_song_by_id(song_id: int, song_service: SongService = Depends(get_song_service)):
@@ -30,7 +30,7 @@ async def delete_song(song_id: int, song_service: SongService = Depends(get_song
 @router.get("/search/{song_title}", status_code=status.HTTP_200_OK)
 async def get_song_by_name(song_title: str, song_service: SongService = Depends(get_song_service)):
     songs = await song_service.get_songs_by_name(song_title)
-    return SongsList(songs=songs)
+    return songs
 
 
 
@@ -42,7 +42,7 @@ async def add_favourite(song_add: FavouriteBase, favourite_service: FavouriteSer
 @router.get("/favourites/{user_id}", status_code=status.HTTP_200_OK)
 async def get_songs(user_id:str, favourite_service: FavouriteService = Depends(get_favourite_service)):
     songs = await favourite_service.get_favourites(user_id)
-    return SongsList(songs=songs)
+    return songs
 
 @router.delete("/favourites/{user_id}/{song_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_favourite(user_id:str, song_id: int, favourite_service: FavouriteService = Depends(get_favourite_service)):

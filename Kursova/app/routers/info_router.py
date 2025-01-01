@@ -22,7 +22,7 @@ async def create_album(album_create:AlbumBase, album_service: AlbumService = Dep
 @router.get("/albums/songs/{album_id}", status_code=status.HTTP_200_OK)
 async def get_album_songs(album_id:int, album_service: AlbumService = Depends(get_album_service)):
     songs = await album_service.get_album_songs(album_id)
-    return SongsList(songs=songs)
+    return songs
 
 @router.delete("/albums/search/{album_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_album(album_id:int, album_service: AlbumService = Depends(get_album_service)):
@@ -53,7 +53,7 @@ async def create_artist(artist_create:ArtistBase, artist_service: ArtistService 
 @router.get("/artists/songs/{artist_id}", status_code=status.HTTP_200_OK)
 async def get_artist_songs(artist_id:int, artist_service: ArtistService = Depends(get_artist_service)):
     songs = await artist_service.get_artist_songs(artist_id)
-    return SongsList(songs=songs)
+    return songs
 
 @router.get("/artists/albums/{artist_id}", response_model=AlbumList, status_code=status.HTTP_200_OK)
 async def get_artist_albums(artist_id:int, artist_service: ArtistService = Depends(get_artist_service)):
