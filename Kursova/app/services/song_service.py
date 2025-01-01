@@ -10,7 +10,7 @@ class SongService:
         self.song_repository = song_repository
 
     async def get_songs(self):
-        songs = await self.song_repository.get_all()
+        songs = await self.song_repository.get_all_songs()
         return list(songs)
     
     async def get_songs_by_name(self, title: str):
@@ -18,7 +18,7 @@ class SongService:
         return list(songs)
 
     async def get_song_by_id(self, song_id: int):
-        song = await self.song_repository.get_one(song_id)
+        song = await self.song_repository.get_one_song(song_id)
         if song is None:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Song not found")
         return song

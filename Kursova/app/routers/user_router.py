@@ -39,10 +39,10 @@ async def get_one_playlist(playlist_id:int, playlist_service: PlaylistService = 
     playlist = await playlist_service.get_one_playlist(playlist_id)
     return playlist
 
-@router.get("/playlist/{playlist_id}/songs", status_code=status.HTTP_200_OK)
+@router.get("/playlist/{playlist_id}/songs", response_model=SongsList, status_code=status.HTTP_200_OK)
 async def get_playlists_songs(playlist_id:int,  playlist_service: PlaylistService = Depends(get_playlist_service)):
     songs = await playlist_service.get_playlist_songs(playlist_id)
-    return songs
+    return SongsList(songs=songs)
 
 @router.delete("/playlist/{playlist_id}/songs", status_code=status.HTTP_204_NO_CONTENT)
 async def remove_song(playlist_id:int, playlist_service: PlaylistService = Depends(get_playlist_service)):
