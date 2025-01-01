@@ -25,7 +25,7 @@ async def get_album_songs(album_id:int, album_service: AlbumService = Depends(ge
     return SongsList(songs=songs)
 
 @router.delete("/albums/search/{album_id}", status_code=status.HTTP_204_NO_CONTENT)
-async def delete_artist(album_id:int, album_service: AlbumService = Depends(get_album_service)):
+async def delete_album(album_id:int, album_service: AlbumService = Depends(get_album_service)):
     return await album_service.delete_playlist(album_id)
 
 @router.get("/albums/search/{album_id}", response_model=Album, status_code=status.HTTP_200_OK)
