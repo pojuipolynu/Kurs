@@ -21,8 +21,8 @@ class FavouriteRepository(BaseRepository):
                 Album.title.label("album"),
                 Artist.name.label("artist"))
             .join(self.model, Song.id == self.model.song_id)
-            .join(Album, self.model.album_id == Album.id)
-            .join(Artist, self.model.artist_id == Artist.id)
+            .join(Album, Song.album_id == Album.id)
+            .join(Artist, Song.artist_id == Artist.id)
             .filter(self.model.user_id == user_id)
         )
         result = await self.db.execute(query)
