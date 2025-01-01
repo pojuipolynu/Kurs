@@ -1,11 +1,13 @@
 from db.models import Album, Artist
 from schemas.info_schema import AlbumBase, ArtistBase
 from repository.info_repository import ArtistRepository, AlbumRepository
+from repository.favourite_repository import FavouriteRepository
 from fastapi import HTTPException, status
 
 class AlbumService:
     def __init__(self, album_repository: AlbumRepository):
         self.album_repository = album_repository
+        self.fav_repo = FavouriteRepository
 
     async def get_albums(self):
         albums = await self.album_repository.get_all()
@@ -37,6 +39,13 @@ class AlbumService:
         if album is None:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Album not found")
         await self.album_repository.delete(album)
+
+    async def add_album_to_favourite(self, album_id: int, user_id:int):
+        album = await self.album_repository.get_one(album_id)
+        if album is None:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Album not found") 
+        songs = await self.get_album_songs(album_id)
+        return songs
 
 
 class ArtistService:

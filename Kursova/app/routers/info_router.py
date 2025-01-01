@@ -1,11 +1,13 @@
 from fastapi import APIRouter, Depends, status
 
 from schemas.song_schema import SongsList
+from schemas.favourite_schema import FavouriteBase
 from schemas.info_schema import Artist, Album, AlbumList, ArtistList, ArtistBase, AlbumBase
 
 from services.info_service import AlbumService, ArtistService
+from services.favourite_service import FavouriteService
 
-from utils.depends import get_artist_service, get_album_service
+from utils.depends import get_artist_service, get_album_service, get_favourite_service
 
 router = APIRouter(prefix="/other")
 
@@ -37,6 +39,14 @@ async def get_album_by_id(album_id: int, album_service: AlbumService = Depends(g
 async def get_albums_by_name(title:str, album_service: AlbumService = Depends(get_album_service)):
     albums = await album_service.get_albums_by_name(title)
     return AlbumList(albums=albums)
+
+@router.post("/albums/add_fave/{album_id}/{user_id}", status_code=status.HTTP_201_CREATED)
+async def create_album(album_id:int, user_id: str, album_service: AlbumService = Depends(get_album_service), favourite_service: FavouriteService = Depends(get_favourite_service)):
+    songs = await album_service.get_album_songs(album_id)
+    for song_id in songs:
+        song_add = FavouriteBase(user_id=user_id, song_id=song_id["id"])
+        favourite_service.add_favourites(song_add)
+    return {"message": "Success"}
 
 
 
