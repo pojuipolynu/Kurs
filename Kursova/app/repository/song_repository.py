@@ -78,7 +78,7 @@ class SongRepository(BaseRepository):
             for song in songs
         ]
     
-    async def get_one_song(self):
+    async def get_one_song(self, id):
         query = (
             select(
                 self.model.id,
