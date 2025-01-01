@@ -11,10 +11,34 @@ class AlbumRepository(BaseRepository):
 
     async def get_album_songs(self, album_id: int):
         result = await self.db.execute(
-            select(self.song).filter(self.song.album_id == album_id)
+            select(self.song.id,
+                self.song.title,
+                self.song.artist_id,
+                self.song.fileUrl,
+                self.song.imageUrl,
+                self.song.duration,
+                self.song.album_id,
+                Album.title.label("album"),
+                Artist.name.label("artist"))
+            .join(Album, self.model.album_id == Album.id)
+            .join(Artist, self.model.artist_id == Artist.id).filter(self.song.album_id == album_id)
         )
-        songs = result.scalars().all()
-        return songs
+        songs = result.mappings().all()  
+
+        return [
+            {
+                "id": song["id"],
+                "title": song["title"],
+                "artist_id": song["artist_id"],
+                "fileUrl": song["fileUrl"],
+                "imageUrl": song["imageUrl"],
+                "duration": song["duration"],
+                "album_id": song["album_id"],
+                "album": song["album"],
+                "artist": song["artist"],
+            }
+            for song in songs
+        ]
     
     async def get_album_by_name(self, title: str):
         albums = await self.db.execute(select(self.model).filter(self.model.title.ilike(f"%{title}%")))
@@ -30,10 +54,35 @@ class ArtistRepository(BaseRepository):
 
     async def get_artist_songs(self, artist_id: int):
         result = await self.db.execute(
-            select(self.song).filter(self.song.artist_id == artist_id)
+            select(self.song.id,
+                self.song.title,
+                self.song.artist_id,
+                self.song.fileUrl,
+                self.song.imageUrl,
+                self.song.duration,
+                self.song.album_id,
+                Album.title.label("album"),
+                Artist.name.label("artist"))
+            .join(Album, self.model.album_id == Album.id)
+            .join(Artist, self.model.artist_id == Artist.id)
+            .filter(self.song.artist_id == artist_id)
         )
-        songs = result.scalars().all()
-        return songs
+        songs = result.mappings().all()  
+
+        return [
+            {
+                "id": song["id"],
+                "title": song["title"],
+                "artist_id": song["artist_id"],
+                "fileUrl": song["fileUrl"],
+                "imageUrl": song["imageUrl"],
+                "duration": song["duration"],
+                "album_id": song["album_id"],
+                "album": song["album"],
+                "artist": song["artist"],
+            }
+            for song in songs
+        ]
     
     async def get_artist_albums(self, artist_id: int):
         result = await self.db.execute(

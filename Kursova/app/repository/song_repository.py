@@ -18,19 +18,19 @@ class SongRepository(BaseRepository):
     async def get_song_by_name(self, title: str):
         query = (
             select(
-                Song.id,
-                Song.title,
-                Song.artist_id,
-                Song.fileUrl,
-                Song.imageUrl,
-                Song.duration,
-                Song.album_id,
+                self.model.id,
+                self.model.title,
+                self.model.artist_id,
+                self.model.fileUrl,
+                self.model.imageUrl,
+                self.model.duration,
+                self.model.album_id,
                 Album.title.label("album"),
                 Artist.name.label("artist")
             )
-            .join(Album, Song.album_id == Album.id)
-            .join(Artist, Song.artist_id == Artist.id)
-            .filter(Song.title.ilike(f"%{title}%"))
+            .join(Album, self.model.album_id == Album.id)
+            .join(Artist, self.model.artist_id == Artist.id)
+            .filter(self.model.title.ilike(f"%{title}%"))
         )
 
         result = await self.db.execute(query)
