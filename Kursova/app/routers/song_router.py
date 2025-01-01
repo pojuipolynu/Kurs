@@ -28,7 +28,7 @@ async def delete_song(song_id: int, song_service: SongService = Depends(get_song
     return {"message": "User deleted successfully"}
 
 @router.get("/search/{song_title}", response_model=SongsList, status_code=status.HTTP_200_OK)
-async def get_song_by_name(song_title: int, song_service: SongService = Depends(get_song_service)):
+async def get_song_by_name(song_title: str, song_service: SongService = Depends(get_song_service)):
     songs = await song_service.get_songs_by_name(song_title)
     return SongsList(songs=songs)
 
