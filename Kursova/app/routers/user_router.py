@@ -48,7 +48,7 @@ async def get_playlists_songs(playlist_id:int,  playlist_service: PlaylistServic
 async def remove_song(playlist_id:int, playlist_service: PlaylistService = Depends(get_playlist_service)):
     return await playlist_service.delete_playlist(playlist_id)
 
-@router.post("/playlist/{playlist_id}/songs/{song_id}", response_model=ListModel, status_code=status.HTTP_201_CREATED)
+@router.post("/playlist/{playlist_id}/songs/{song_id}", status_code=status.HTTP_201_CREATED)
 async def add_song(playlist_id:int, song_id:int, playlist_service: PlaylistService = Depends(get_playlist_service)):
     return await playlist_service.add_song_to_playlist(playlist_id, song_id)
 
