@@ -93,25 +93,22 @@ class SongRepository(BaseRepository):
             )
             .join(Album, self.model.album_id == Album.id)
             .join(Artist, self.model.artist_id == Artist.id)
-            .filter(self.model.id == id))
+            .filter(self.model.id == id)
+        )
         
         result = await self.db.execute(query)
-        variable = result.scalars().first()
+        variable = result.first()  
         if variable is None:
-            return
+            return None
 
         return {
-                "id": variable["id"],
-                "title": variable["title"],
-                "artist_id": variable["artist_id"],
-                "fileUrl": variable["fileUrl"],
-                "imageUrl": variable["imageUrl"],
-                "duration": variable["duration"],
-                "album_id": variable["album_id"],
-                "album": variable["album"],
-                "artist": variable["artist"],
-            }
-    
-
-  
-
+            "id": variable.id,
+            "title": variable.title,
+            "artist_id": variable.artist_id,
+            "fileUrl": variable.fileUrl,
+            "imageUrl": variable.imageUrl,
+            "duration": variable.duration,
+            "album_id": variable.album_id,
+            "album": variable.album,
+            "artist": variable.artist,
+        }
