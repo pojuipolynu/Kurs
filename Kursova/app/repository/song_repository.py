@@ -8,12 +8,23 @@ class SongRepository(BaseRepository):
     def __init__(self, db: AsyncSession):
         super().__init__(db=db, model=Song)
 
+from sqlalchemy.future import select
+from sqlalchemy.orm import joinedload
+
+class SongRepository(BaseRepository):
+    def __init__(self, db: AsyncSession):
+        super().__init__(db=db, model=Song)
+
     async def get_song_by_name(self, title: str):
-        # songs = await self.db.execute(select(self.model).filter(self.model.title.ilike(f"%{title}%")))
-        # variable = songs.scalars().all()
         query = (
             select(
-                self.model.id,
+                Song.id,
+                Song.title,
+                Song.artist_id,
+                Song.fileUrl,
+                Song.imageUrl,
+                Song.duration,
+                Song.album_id,
                 Album.title.label("album"),
                 Artist.name.label("artist")
             )
@@ -23,6 +34,22 @@ class SongRepository(BaseRepository):
         )
 
         result = await self.db.execute(query)
-        return result.scalars().all()
+        songs = result.mappings().all()  
+
+        return [
+            {
+                "id": song["id"],
+                "title": song["title"],
+                "artist_id": song["artist_id"],
+                "fileUrl": song["fileUrl"],
+                "imageUrl": song["imageUrl"],
+                "duration": song["duration"],
+                "album_id": song["album_id"],
+                "album": song["album"],
+                "artist": song["artist"],
+            }
+            for song in songs
+        ]
+
   
 
