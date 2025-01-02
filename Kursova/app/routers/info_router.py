@@ -45,7 +45,7 @@ async def create_album(album_id:int, user_id: str, album_service: AlbumService =
     songs = await album_service.get_album_songs(album_id)
     for song_id in songs:
         song_add = FavouriteBase(user_id=user_id, song_id=song_id["id"])
-        favourite_service.add_favourites(song_add)
+        await favourite_service.add_favourites(song_add)
     return {"message": "Success"}
 
 
