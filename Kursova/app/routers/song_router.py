@@ -18,7 +18,7 @@ async def get_songs(song_service: SongService = Depends(get_song_service)):
 async def get_song_by_id(song_id: int, song_service: SongService = Depends(get_song_service)):
     return await song_service.get_song_by_id(song_id)
 
-@router.post("/", response_model=Song, status_code=status.HTTP_201_CREATED)
+@router.post("/", status_code=status.HTTP_201_CREATED)
 async def create_song(song_create: SongBase, song_service: SongService = Depends(get_song_service)):
     return await song_service.create_song(song_create)
 
